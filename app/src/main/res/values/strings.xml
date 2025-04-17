@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BgAudio4</string>
+
+    <string name="button2">Start Listen</string>
+    <string name="textViewLabelDefault">textViewDefault!</string>
+    <string name="textview2LabelDefaut">TextView2Default</string>
+</resources>
