@@ -20,7 +20,7 @@ import org.jtransforms.fft.DoubleFFT_1D
 
 class AudioBg(mainActivity: Activity, textView2: TextView, chartBgDb2: ChartBgDb, chartBgTff2:ChartBgTFF) {
 
-    private val sampleRate = 44100 // Fréquence d'échantillonnage en Hz
+    private val sampleRate = 8000 // Fréquence d'échantillonnage en Hz
     private val REQUEST_RECORD_AUDIO_PERMISSION_CODE = 200
 
     private val textView: TextView=textView2

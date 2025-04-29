@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.github.wendykierp:JTransforms:3.1")
+   // implementation("cc.suffro:kymatik:0.1.0-beta")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
