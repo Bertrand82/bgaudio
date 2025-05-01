@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bgaudio4"
+    namespace = "bg.audio4.bgaudio4"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.bgaudio4"
+        applicationId = "bg.audio4.bgaudio4"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

@@ -1,4 +1,4 @@
-package com.example.bgaudio4
+package bg.audio4.bgaudio4
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,13 +9,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import bg.util.audio.AudioBg
+import bg.util.audio.ChartBgDb
+import bg.util.audio.ChartBgTFF
 import com.github.mikephil.charting.charts.BarChart
 
 
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var audioBg:AudioBg
+    private lateinit var audioBg: AudioBg
 
 
     @SuppressLint("MissingPermission")

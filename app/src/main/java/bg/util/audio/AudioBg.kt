@@ -1,4 +1,4 @@
-package com.example.bgaudio4
+package bg.util.audio
 
 
 import android.Manifest.permission
@@ -18,6 +18,9 @@ import kotlin.math.log10
 import kotlin.math.hypot
 import org.jtransforms.fft.DoubleFFT_1D
 
+/**
+ * Cette classe gère la partie audio Android
+ */
 class AudioBg(mainActivity: Activity, textView2: TextView, chartBgDb2: ChartBgDb, chartBgTff2:ChartBgTFF) {
 
     private val sampleRate = 8000 // Fréquence d'échantillonnage en Hz
@@ -27,6 +30,8 @@ class AudioBg(mainActivity: Activity, textView2: TextView, chartBgDb2: ChartBgDb
     private val activity :Activity = mainActivity
     private val chartBgDb = chartBgDb2
     private val chartBgTFF = chartBgTff2
+
+    private val listFFT:MutableList<DoubleFFT_1D> = mutableListOf()
 
     val bufferSize = AudioRecord.getMinBufferSize(
         sampleRate,
@@ -120,7 +125,7 @@ class AudioBg(mainActivity: Activity, textView2: TextView, chartBgDb2: ChartBgDb
 
     fun performFFT(audioData: ShortArray): DoubleArray {
         val n = audioData.size
-        val fft = DoubleFFT_1D(n.toLong())
+        val fft = DoubleFFT_1D(n.toLong()) // DoubleFFT_1D
 
         // Convertir les données audio en tableau de doubles
         val realData = DoubleArray(n)
@@ -131,14 +136,28 @@ class AudioBg(mainActivity: Activity, textView2: TextView, chartBgDb2: ChartBgDb
         // Appliquer la FFT en place
         fft.realForward(realData)
 
+        listFFT.add(fft)
+        if(listFFT.size > 10000){
+            listFFT.removeAt(0)
+        }
+
         // Calculer la magnitude du spectre
+
+        val magnitudes2 = calculMagnetude(realData)
+        return magnitudes2
+    }
+
+    /**
+     * Calculer la magnitude du spectre
+     */
+    fun calculMagnetude(realData:DoubleArray):DoubleArray{
+        val n = realData.size
         val magnitudes = DoubleArray(n / 2)
         for (i in magnitudes.indices) {
             val real = realData[2 * i]
             val imag = realData[2 * i + 1]
             magnitudes[i] = hypot(real, imag)
         }
-
         return magnitudes
     }
 

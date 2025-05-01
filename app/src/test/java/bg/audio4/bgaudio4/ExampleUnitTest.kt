@@ -1,4 +1,4 @@
-package com.example.bgaudio4
+package bg.audio4.bgaudio4
 
 import org.junit.Test
 

@@ -1,10 +1,11 @@
-package com.example.bgaudio4
+package bg.util.audio
 
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.content.ContextCompat
+import bg.audio4.bgaudio4.R
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -12,17 +13,16 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import kotlin.math.sin
 
-class ChartBgTFF(context2: Context, barChart2: BarChart) {
+class ChartBgDb(context2: Context, barChart2: BarChart) {
 
-    var valArray: DoubleArray = DoubleArray(50)
     var i : Int =0;
     private  val context=context2
     private val barChart = barChart2
     private lateinit var dataSet: BarDataSet
     private val entries = mutableListOf<BarEntry>()
     private val updateInterval: Long = 100 // Intervalle en millisecondes
-    private val maxEntries = 400
-
+    private val maxEntries = 50
+    var decibel=0f
     private val handler = Handler(Looper.getMainLooper())
 
     init {
@@ -58,7 +58,7 @@ class ChartBgTFF(context2: Context, barChart2: BarChart) {
             axisLeft.apply {
                 setDrawGridLines(false)
                 axisMinimum = -2f // Ajustez selon vos données
-                axisMaximum= 1000f
+                axisMaximum= 200f
             }
 
             axisRight.isEnabled = false
@@ -74,21 +74,20 @@ class ChartBgTFF(context2: Context, barChart2: BarChart) {
         handler.post(object : Runnable {
 
             override fun run() {
-                // Normaliser la TFF
-                val max: Double = (valArray.maxOrNull()?:10).toDouble()
-               // Supprimer les données
-                while( entries.size > 0){
+                val newValue__ = 20f* sin(i.toFloat()/10f )// Remplacez par votre méthode de récupération des données
+                val newValue=decibel
+                decibel=0f
+                i++;
+                Log.i("bg2","i::::: "+i+"    x:  "+entries.size.toFloat()+"     y: newValue: "+newValue)
+                entries.add(BarEntry(entries.size.toFloat(), newValue))
+
+                if (entries.size > maxEntries) {
                     entries.removeAt(0)
+                    // Réajustez les indices X des entrées
+                    entries.forEachIndexed { index, entry ->
+                        entry.x = index.toFloat()
+                    }
                 }
-
-                var j=0;
-                while (j < maxEntries && j < valArray.size ) {
-                    entries.add(BarEntry(j.toFloat(), 1000*(valArray[j]/max).toFloat()))
-                    j++
-                }
-
-
-
 
                 dataSet.notifyDataSetChanged()
                 barChart.data.notifyDataChanged()
@@ -100,6 +99,5 @@ class ChartBgTFF(context2: Context, barChart2: BarChart) {
             }
         })
     }
-
 
 }
